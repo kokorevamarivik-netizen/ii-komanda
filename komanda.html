@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Найми ИИ-команду · Метод Родочинской</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Unbounded:wght@600;800&display=swap">
+<style>
+:root{--m:#E3165E;--l:#B565D8;--o:#94901F;--ink:#2A1A24;--mute:#8A7480;--soft:#FBF3F7;--lsoft:#F6EEFB;--osoft:#F5F4E4;--line:#F0DCE6}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Manrope,system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.5;font-size:16px;overflow-x:hidden;
+ padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:640px;margin:0 auto;padding:22px 18px 60px;position:relative}
+.top{display:flex;gap:8px;flex-wrap:wrap}
+.pill{display:inline-block;border-radius:99px;padding:6px 14px;font-weight:800;font-size:11px;letter-spacing:.06em;color:#fff;
+ background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 50%),linear-gradient(180deg,#FF5C93,var(--m) 55%,#B80E4A);border-bottom:3px solid #9E0C40}
+.pill.l{background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 50%),linear-gradient(180deg,#D99BF0,var(--l) 55%,#8E3FB3);border-bottom-color:#6E2C8E}
+.pill.o{background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 50%),linear-gradient(180deg,#C2BD3E,var(--o) 55%,#6E6A12);border-bottom-color:#55520C}
+h1{font-family:Unbounded,sans-serif;font-weight:800;font-size:clamp(30px,8.5vw,46px);line-height:1.05;letter-spacing:-.01em;margin:26px 0 14px;max-width:76%}
+h2{font-family:Unbounded,sans-serif;font-weight:800;font-size:clamp(21px,5.6vw,28px);line-height:1.15;margin-bottom:10px}
+h3{font-family:Unbounded,sans-serif;font-weight:600;font-size:16px;margin-bottom:6px}
+.m{color:var(--m)} .lc{color:var(--l)} .oc{color:#6E6A12}
+.lead{font-size:17px;max-width:540px}
+.hero{position:relative}
+.stk{position:absolute;pointer-events:none;animation:float 5s ease-in-out infinite}
+.stk.b{animation-delay:-2s}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -8px}}
+.steps{display:flex;gap:6px;margin:22px 0 6px}
+.steps i{flex:1;height:7px;border-radius:99px;background:#F4ECF1;transition:background .4s}
+.steps i.on{background:linear-gradient(90deg,#FF5C93,var(--m))}
+.card{border-radius:24px;padding:22px 20px;background:var(--soft);margin-top:16px}
+.card.l{background:var(--lsoft)} .card.o{background:var(--osoft)} .card.w{background:#fff;border:1.5px solid var(--line)}
+.q{display:none;animation:in .45s cubic-bezier(.2,.8,.2,1)}
+.q.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.qn{font-size:13px;font-weight:800;color:var(--l);letter-spacing:.05em;margin-bottom:6px}
+.opts{display:grid;gap:10px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.three{grid-template-columns:1fr 1fr 1fr}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:inherit;font-weight:700;font-size:16px;color:var(--ink);
+ background:#fff;border:2px solid var(--line);border-radius:18px;padding:14px 16px;cursor:pointer;transition:transform .15s,border-color .2s,background .2s}
+.opt:active{transform:scale(.98)}
+.opt .e{font-size:22px;width:30px;text-align:center;flex:none}
+.opt small{display:block;font-weight:500;font-size:13px;color:var(--mute)}
+.opt.big{flex-direction:column;align-items:center;text-align:center;gap:2px;padding:16px 8px}
+.opt.big b{font-family:Unbounded,sans-serif;font-size:26px;color:var(--m)}
+.opt.sel{border-color:var(--m);background:#FFF5F9;box-shadow:0 4px 14px rgba(227,22,94,.15)}
+.opt.sel:not(.big):after{content:"✓";margin-left:auto;width:26px;height:26px;flex:none;border-radius:50%;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;
+ background:radial-gradient(circle at 35% 30%,#FF8DB2,var(--m) 70%)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font:inherit;font-weight:800;font-size:16px;color:#fff;text-decoration:none;
+ border-radius:99px;padding:15px 26px;background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 50%),linear-gradient(180deg,#FF5C93,var(--m) 55%,#B80E4A);
+ border-bottom:4px solid #9E0C40;box-shadow:0 6px 16px rgba(227,22,94,.3);transition:transform .15s,opacity .2s}
+.btn:active{transform:scale(.97)}
+.btn[disabled]{opacity:.35;pointer-events:none}
+.btn.l{background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 50%),linear-gradient(180deg,#D99BF0,var(--l) 55%,#8E3FB3);border-bottom-color:#6E2C8E;box-shadow:0 6px 16px rgba(181,101,216,.3)}
+.btn.wide{width:100%}
+.row{display:flex;gap:10px;margin-top:18px;align-items:center}
+.back{white-space:nowrap;background:none;border:0;font:inherit;font-weight:700;color:var(--mute);cursor:pointer;padding:10px 4px}
+input[type=text]{width:100%;font:inherit;font-size:16px;border:2px solid var(--line);border-radius:16px;padding:13px 15px;margin-top:14px;color:var(--ink);background:#fff}
+input:focus{outline:none;border-color:var(--l)}
+.hint{font-size:13px;color:var(--mute);margin-top:6px}
+#result{display:none}
+#result.on{display:block;animation:in .5s cubic-bezier(.2,.8,.2,1)}
+/* неделя */
+#weekCard{background:#fff;border-radius:24px;padding:20px 16px 16px;margin-top:16px;border:1.5px solid var(--line)}
+.wk-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+.wk-head small{font-size:12px;color:var(--mute);font-weight:700}
+.day{display:grid;grid-template-columns:46px 1fr;gap:12px;align-items:stretch;margin-top:9px}
+.dn{border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Unbounded,sans-serif;font-weight:800;font-size:15px;color:#fff;
+ background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 50%),linear-gradient(180deg,#FF5C93,var(--m) 60%,#B80E4A);border-bottom:3px solid #9E0C40}
+.day.t .dn{background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 50%),linear-gradient(180deg,#D99BF0,var(--l) 60%,#8E3FB3);border-bottom-color:#6E2C8E}
+.day.s .dn{background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 50%),linear-gradient(180deg,#C2BD3E,var(--o) 60%,#6E6A12);border-bottom-color:#55520C}
+.day.r .dn{background:#F4ECF1;color:#B9A3AF;border-bottom:3px solid #E6D3DD}
+.dc{border-radius:16px;padding:11px 13px;background:var(--soft)}
+.day.t .dc{background:var(--lsoft)} .day.s .dc{background:var(--osoft)} .day.r .dc{background:#FAF7F8;color:var(--mute)}
+.dc .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;font-weight:800;margin-bottom:3px}
+.chip{border-radius:99px;padding:2px 9px;background:#fff;color:var(--m)}
+.day.t .chip{color:var(--l)} .day.s .chip{color:#6E6A12}
+.dc .rb{font-weight:800;font-size:15px}
+.dc .tp{font-size:14px;color:#5E4A55}
+.bar{display:flex;height:34px;border-radius:99px;overflow:hidden;margin-top:14px;font-weight:800;font-size:12px;color:#fff;text-align:center;line-height:34px}
+.bar div{transition:flex .5s}
+.leg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:13px;color:var(--mute);font-weight:700}
+.leg span:before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px;background:var(--c)}
+.rubs{display:grid;gap:10px;margin-top:12px}
+.rub{background:#fff;border-radius:16px;padding:12px 14px;border:2px solid var(--line)}
+.rub b{display:block}
+.rub span{font-size:13.5px;color:var(--mute)}
+.prompt{white-space:pre-wrap;font-size:14px;line-height:1.5;background:#FCF8FE;border:2px dashed var(--l);border-radius:18px;padding:16px;max-height:220px;overflow:auto;margin-top:14px}
+.ais{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.ai{display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:var(--ink);font-weight:800;font-size:13px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 6px}
+.ai b{font-size:22px}
+.how{counter-reset:s;list-style:none;margin-top:10px}
+.how li{counter-increment:s;position:relative;padding-left:36px;margin:12px 0}
+.how li:before{content:counter(s);position:absolute;left:0;top:-1px;width:25px;height:25px;border-radius:50%;color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;
+ background:radial-gradient(circle at 35% 30%,#FF8DB2,var(--m) 70%)}
+.cmds{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.cmd{font:inherit;text-align:left;cursor:pointer;background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px;color:var(--ink);transition:border-color .2s}
+.cmd b{display:block;font-size:14px}
+.cmd span{font-size:12.5px;color:var(--mute)}
+.cmd.ok{border-color:var(--o)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);opacity:0;background:var(--ink);color:#fff;font-weight:700;
+ padding:12px 20px;border-radius:99px;font-size:14px;transition:all .3s;z-index:9;pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.foot{text-align:center;font-size:12.5px;color:var(--mute);margin-top:36px}
+.conf{position:fixed;inset:0;pointer-events:none;z-index:8;overflow:hidden}
+.conf i{position:absolute;top:-20px;width:10px;height:14px;border-radius:3px;animation:fall 1.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.2}}
+@media (prefers-reduced-motion:reduce){.stk,.conf i{animation:none}.q,#result.on{animation:none}}
+
+.tabs{display:flex;gap:8px;margin-top:22px;background:#F7EEF3;border-radius:99px;padding:5px}
+.tab{flex:1;border:0;font:inherit;font-weight:800;font-size:14px;border-radius:99px;padding:11px 8px;background:none;color:var(--mute);cursor:pointer}
+.tab.on{color:#fff;background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,0) 50%),linear-gradient(180deg,#FF5C93,var(--m) 55%,#B80E4A);border-bottom:3px solid #9E0C40}
+.pane{display:none}.pane.on{display:block;animation:in .4s cubic-bezier(.2,.8,.2,1)}
+textarea{width:100%;font:inherit;font-size:16px;border:2px solid var(--line);border-radius:16px;padding:13px 15px;margin-top:14px;color:var(--ink);background:#fff;resize:none}
+textarea:focus{outline:none;border-color:var(--l)}
+.reel{background:#fff;border:2px solid var(--line);border-radius:18px;padding:12px;margin-top:10px;transition:border-color .3s,background .3s}
+.reel .hd{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.reel .no{width:26px;height:26px;border-radius:50%;flex:none;color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 35% 30%,#E6C0F7,var(--l) 70%)}
+.reel input[type=text]{margin:0;padding:10px 12px;font-size:15px;border-radius:12px}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.nums label{font-size:11.5px;font-weight:800;color:var(--mute)}
+.nums input{width:100%;font:inherit;font-size:16px;font-weight:700;border:2px solid var(--line);border-radius:12px;padding:9px 10px;margin-top:3px;background:#fff;color:var(--ink)}
+.nums input:focus{outline:none;border-color:var(--l)}
+.verdict{display:none;margin-top:9px;border-radius:12px;padding:9px 11px;font-size:14px;font-weight:700}
+.reel.done .verdict{display:block}
+.v0{background:#F4ECF1;color:#7A6470}.v1{background:#F6EEFB;color:#7E3FA0}.v2{background:#FDE7EF;color:#B80E4A}.v3{background:#F2F1DA;color:#55520C}
+.reel.win{border-color:var(--m);background:#FFF8FB}
+.crown{display:none;white-space:nowrap;flex:none;margin-left:auto;font-size:11px;font-weight:800;color:#fff;border-radius:99px;padding:3px 10px;background:linear-gradient(180deg,#FF5C93,var(--m) 60%,#B80E4A)}
+.reel.win .crown{display:inline-block}
+.scale{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px;text-align:center}
+.scale div{border-radius:14px;padding:9px 4px;font-size:11.5px;font-weight:700;line-height:1.25}
+.scale b{display:block;font-family:Unbounded,sans-serif;font-size:13px;margin-bottom:2px}
+.tpl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.tpl div{background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px;font-size:13px;color:var(--mute)}
+.tpl b{display:block;color:var(--ink);font-size:13.5px}
+
+.heat{font-size:12px;font-weight:800;letter-spacing:.05em;margin:16px 0 4px;color:var(--mute)}
+.sits{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sit{font:inherit;text-align:left;cursor:pointer;background:#fff;border:2px solid var(--line);border-radius:16px;padding:11px 12px;color:var(--ink);font-weight:800;font-size:14px;line-height:1.25;transition:border-color .2s,background .2s}
+.sit small{display:block;font-weight:500;font-size:12px;color:var(--mute);margin-top:2px}
+.sit.sel{border-color:var(--m);background:#FFF5F9}
+.seg{display:flex;gap:6px;background:#F7EEF3;border-radius:99px;padding:4px;margin-top:10px}
+.seg button{flex:1;border:0;font:inherit;font-weight:800;font-size:13.5px;border-radius:99px;padding:9px 6px;background:none;color:var(--mute);cursor:pointer}
+.seg button.on{background:#fff;color:var(--m);box-shadow:0 2px 6px rgba(80,20,60,.12)}
+.fl{font-size:12.5px;font-weight:800;color:var(--mute);margin-top:12px;display:block}
+.fl + input{margin-top:5px}
+.var{background:#fff;border:2px solid var(--line);border-radius:20px;padding:14px;margin-top:12px}
+.var .vh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.var .vt{font-family:Unbounded,sans-serif;font-weight:600;font-size:13px}
+.bubble{background:linear-gradient(180deg,#FFF0F6,#FDE7EF);border-radius:18px 18px 18px 6px;padding:12px 14px;font-size:15.5px;line-height:1.45;white-space:pre-wrap}
+.why{font-size:12.5px;color:var(--mute);margin-top:8px}
+.acts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px}
+.act{display:flex;align-items:center;justify-content:center;gap:5px;font:inherit;font-weight:800;font-size:13px;border-radius:12px;padding:10px 4px;cursor:pointer;text-decoration:none;border:2px solid var(--line);background:#fff;color:var(--ink)}
+.act.wa{background:#25D366;border-color:#1DA851;color:#fff}
+.act.tg{background:#2AABEE;border-color:#1E8FCB;color:#fff}
+.tog{display:flex;align-items:center;gap:10px;margin-top:12px;font-weight:700;font-size:14px;cursor:pointer}
+.tog input{width:20px;height:20px;accent-color:var(--m)}
+.five{display:grid;gap:8px;margin-top:12px}
+.fr{display:flex;gap:8px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 10px;transition:border-color .3s,background .3s}
+.fr input[type=text]{margin:0;border:0;padding:6px 4px;font-size:15px}
+.fr input[type=text]:focus{border:0}
+.chk{flex:none;width:34px;height:34px;border-radius:50%;border:2px solid var(--line);background:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:transparent}
+.fr.done{border-color:var(--o);background:#FAFAEF}
+.fr.done .chk{background:radial-gradient(circle at 35% 30%,#DCD87A,var(--o) 70%);border-color:var(--o);color:#fff}
+.prog{height:14px;border-radius:99px;background:#F4ECF1;overflow:hidden;margin-top:14px}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FF5C93,var(--m));transition:width .5s;border-radius:99px}
+.rules{list-style:none;margin-top:10px}
+.rules li{padding:9px 0 9px 30px;position:relative;border-bottom:1.5px dashed var(--line);font-size:14.5px}
+.rules li:last-child{border:0}
+.rules li b{display:block}
+.rules li:before{content:attr(data-e);position:absolute;left:0;top:8px;font-size:17px}
+
+.task{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:18px;padding:10px 12px;margin-top:8px;transition:border-color .2s,background .2s}
+.task.on{border-color:var(--m);background:#FFF8FB}
+.task .ic{font-size:22px;width:30px;text-align:center;flex:none}
+.task .tx{flex:1;min-width:0;font-weight:800;font-size:14.5px;line-height:1.25}
+.task .tx small{display:block;font-weight:500;font-size:12px;color:var(--mute)}
+.stp{display:flex;align-items:center;gap:4px;flex:none}
+.stp button{width:32px;height:32px;border-radius:50%;border:2px solid var(--line);background:#fff;font:inherit;font-weight:800;font-size:18px;color:var(--m);cursor:pointer;line-height:1}
+.stp b{min-width:44px;text-align:center;font-family:Unbounded,sans-serif;font-size:14px}
+.stp b small{display:block;font-family:Manrope,sans-serif;font-size:10px;color:var(--mute);font-weight:700}
+.board{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.big{border-radius:20px;padding:16px 12px;text-align:center;background:#fff;border:2px solid var(--line)}
+.big b{display:block;font-family:Unbounded,sans-serif;font-weight:800;font-size:30px;line-height:1.1;color:var(--m)}
+.big.l b{color:var(--l)}
+.big span{font-size:12.5px;color:var(--mute);font-weight:700}
+.bars{margin-top:14px}
+.bar2{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:12.5px;font-weight:700}
+.bar2 span{width:96px;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar2 b{white-space:nowrap}
+.bar2 i{display:block;height:12px;border-radius:99px;background:linear-gradient(90deg,#FF8DB2,var(--m))}
+.emp{background:#fff;border:2px solid var(--line);border-radius:22px;padding:14px;margin-top:12px;position:relative}
+.emp.top3{border-color:var(--m)}
+.emp .eh{display:flex;align-items:center;gap:12px}
+.av{width:52px;height:52px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:26px;
+ background:radial-gradient(circle at 35% 30%,#FFD3E2,#FF7BA6 55%,var(--m));border-bottom:3px solid #9E0C40}
+.emp:nth-child(3n+2) .av{background:radial-gradient(circle at 35% 30%,#F1DDFB,#D9A6EF 55%,var(--l));border-bottom-color:#6E2C8E}
+.emp:nth-child(3n) .av{background:radial-gradient(circle at 35% 30%,#F3F1C4,#D8D46A 55%,var(--o));border-bottom-color:#55520C}
+.emp h3{margin:0;font-size:15px}
+.emp .role{font-size:12.5px;color:var(--mute);font-weight:700}
+.emp p{font-size:14px;margin-top:8px}
+.badge{position:absolute;top:-10px;right:14px;font-size:11px;font-weight:800;color:#fff;border-radius:99px;padding:3px 10px;background:linear-gradient(180deg,#D99BF0,var(--l) 60%,#8E3FB3)}
+.save{font-size:13px;font-weight:800;color:#6E6A12;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><span class="pill">МЕТОД РОДОЧИНСКОЙ</span><span class="pill l">РОЛЬ 5 · ЗВЕЗДА-ПРОДЮСЕР</span></div>
+  <div class="hero">
+    <svg class="stk" style="right:-8px;top:-4px;width:76px;rotate:-10deg" viewBox="0 0 100 100"><defs><radialGradient id="a" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#FF7BA6"/><stop offset="1" stop-color="#E3165E"/></radialGradient></defs><path d="M50 4l13 29 31 3-23 21 7 31-28-16-28 16 7-31L6 36l31-3z" fill="url(#a)" stroke="#E3165E" stroke-width="1.5" stroke-linejoin="round"/><ellipse cx="38" cy="30" rx="16" ry="8" fill="#fff" opacity=".55" transform="rotate(-25 38 30)"/></svg>
+    <svg class="stk b" style="right:62px;top:-14px;width:34px" viewBox="0 0 100 100"><defs><radialGradient id="b" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#E2B6F5"/><stop offset="1" stop-color="#B565D8"/></radialGradient></defs><path d="M50 2c4 26 10 40 46 48-36 8-42 22-46 48-4-26-10-40-46-48 36-8 42-22 46-48z" fill="url(#b)" stroke="#B565D8" stroke-width="1.5"/><ellipse cx="42" cy="34" rx="10" ry="5" fill="#fff" opacity=".55" transform="rotate(-25 42 34)"/></svg>
+    <h1>Найми <span class="m">ИИ-команду</span></h1>
+    <p class="lead">Отметь, сколько часов в неделю у тебя уходит на рутину. Страница посчитает, сколько времени можно вернуть, и соберёт команду ИИ-сотрудников, которые возьмут эту работу на себя.</p>
+  </div>
+
+  <div class="card">
+    <div class="qn">ШАГ 1 · АУДИТ РУТИНЫ</div>
+    <h2>Что съедает <span class="m">твоё время</span>?</h2>
+    <p class="hint">Жми «+» у задач, которые делаешь сама или сам. Ставь честно, сколько часов в неделю.</p>
+    <div id="tasks"></div>
+    <button class="btn wide" type="button" id="go" style="margin-top:16px" disabled>Собрать команду ✨</button>
+  </div>
+
+  <section id="result">
+    <div class="card l">
+      <div class="qn">ТВОЯ РУТИНА</div>
+      <h2>Вот куда <span class="lc">уходит время</span></h2>
+      <div class="board">
+        <div class="big"><b id="hMonth">0</b><span>часов в месяц на рутину</span></div>
+        <div class="big l"><b id="hFree">0</b><span>часов освободится, если отдать нейросети половину</span></div>
+      </div>
+      <p class="hint" id="days" style="text-align:center;margin-top:10px"></p>
+      <div class="bars" id="bars"></div>
+      <p class="hint" style="margin-top:10px">Считаем только по твоим цифрам: часы в неделю × 4,3. «Половина» это осторожный ориентир, у кого-то выходит больше.</p>
+    </div>
+
+    <div class="card">
+      <div class="qn">ШАГ 2 · ТВОЯ КОМАНДА</div>
+      <h2>Нанимай <span class="m">сотрудников</span></h2>
+      <p>Кнопка «Нанять» копирует инструкцию сотрудника. Вставь её в новый чат ChatGPT, DeepSeek или GigaChat, и он сразу берётся за работу. Начни с первых трёх: на них уходит больше всего часов.</p>
+      <div id="team"></div>
+      <div class="ais">
+        <a class="ai" href="https://chatgpt.com/" target="_blank" rel="noopener"><b>💬</b>ChatGPT</a>
+        <a class="ai" href="https://chat.deepseek.com/" target="_blank" rel="noopener"><b>🐳</b>DeepSeek</a>
+        <a class="ai" href="https://giga.chat/" target="_blank" rel="noopener"><b>🟢</b>GigaChat</a>
+      </div>
+    </div>
+
+    <div class="card o">
+      <div class="qn">ШАГ 3 · ПЕРВАЯ НЕДЕЛЯ</div>
+      <h2>Как запустить <span class="oc">команду</span></h2>
+      <ol class="how" id="week"></ol>
+      <p class="hint" style="margin-top:6px">📸 Сделай скриншот своей команды и отправь в «Хвастаюсь» мини-приложения: пока идёт интенсив, за это начисляются баллы.</p>
+      <button class="back" type="button" id="restart" style="margin-top:6px">↺ Пересчитать</button>
+    </div>
+  </section>
+
+  <div class="card w" id="cta">
+    <h2>Это 1 шаг из системы. <span class="m">Остальные пройдём вместе</span></h2>
+    <p>На <b>Контент-профи 12.0</b> разбираем дальше: как собрать ИИ-команду под твой блог: свои скиллы и агентов для сценариев, каруселей, монтажа и упаковки продукта, и стать ИИ-маркетологом, который ведёт блоги с нейросетями вместо команды. С кураторами, которые ведут за руку.</p>
+    <div id="ctaBox" style="margin-top:16px"></div>
+  </div>
+  <p class="foot">Школа по маркетингу и нейросетям Юлии Родочинской</p>
+</div>
+<div class="toast" id="toast"></div>
+<div class="conf" id="conf"></div>
+<script>
+/* ===== НАСТРОЙКИ ===== */
+var WAITLIST_URL = "";   // ссылка на лист ожидания, например "https://..."
+var CARE_CONTACT = "";   // контакт отдела заботы, например "@care_rodochinskaya"
+/* ===================== */
+
+function $(id){ return document.getElementById(id); }
+function toast(t){ var e=$("toast"); e.textContent=t; e.classList.add("on"); clearTimeout(e._t); e._t=setTimeout(function(){ e.classList.remove("on"); },2200); }
+function copyText(t,done){
+  function fb(){ var ta=document.createElement("textarea"); ta.value=t; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta);
+    ta.select(); ta.setSelectionRange(0,t.length); var ok=false; try{ ok=document.execCommand("copy"); }catch(e){} document.body.removeChild(ta); done(ok); }
+  if (navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(t).then(function(){ done(true); }, fb); } else fb();
+}
+function confetti(){
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var box=$("conf"), cols=["#E3165E","#B565D8","#94901F","#FF7BA6","#E2B6F5"];
+  for (var i=0;i<60;i++){ var p=document.createElement("i"); p.style.left=Math.random()*100+"%"; p.style.background=cols[i%cols.length];
+    p.style.animationDelay=(Math.random()*.5)+"s"; p.style.animationDuration=(1.2+Math.random()*1.2)+"s"; box.appendChild(p); }
+  setTimeout(function(){ box.innerHTML=""; },3200);
+}
+var T=[
+ {k:"scen",ic:"🎬",t:"Сценарии рилс",s:"придумать, о чём снять и что сказать",e:"ИИ-сценарист",d:"Пишет сценарии рилс по секундам: хук, тезисы, призыв. Сам находит места, где зритель уйдёт.",
+  w:"Пишешь сценарии рилс: хук в первые 3 секунды без «привет, сегодня расскажу», 2–4 тезиса с крючком каждые 4–6 секунд, развязка в конце, один призыв. Формат: таблица «секунды · что в кадре · что говорю · текст на экране», плюс заголовок на обложку и подпись. После сценария отметь места, где зритель может уйти, и перепиши их."},
+ {k:"text",ic:"✍️",t:"Посты и подписи",s:"тексты в ленту и под рилс",e:"ИИ-копирайтер",d:"Пишет посты и подписи твоим голосом: сначала изучает твои тексты, потом пишет так же.",
+  w:"Пишешь посты и подписи моим голосом. Сначала попроси 3–5 моих текстов, опиши мой стиль (длина, слова, юмор, как начинаю и заканчиваю) и дальше пиши только так. Первая строка цепляет до «ещё», в конце один призыв."},
+ {k:"plan",ic:"🗓",t:"Контент-план и идеи",s:"«а что сегодня выложить?»",e:"ИИ-редактор",d:"Собирает план на неделю по целям и превращает одну идею в пост, рилс, карусель и сторис.",
+  w:"Собираешь контент-план на неделю: день, площадка, формат, цель (привлечь, доверие, продать), тема. Продающего не больше 20%. По запросу превращаешь одну идею в пост, рилс, карусель и сторис."},
+ {k:"edit",ic:"✂️",t:"Монтаж и субтитры",s:"резать, клеить, подписывать",e:"ИИ-монтажёр",d:"Делает монтажный лист и субтитры по твоему тексту: остаётся вставить в CapCut или другой редактор.",
+  w:"Помогаешь с монтажом: по моему тексту или расшифровке видео делаешь монтажный лист (какие куски оставить, где резать паузы, где вставить перебивку, крупный план или текст на экране), пишешь субтитры короткими строками по 3–5 слов и подсказываешь музыку и обложку. Субтитры я вставлю в CapCut или другой редактор."},
+ {k:"carousel",ic:"🖼",t:"Карусели и обложки",s:"слайды и картинки",e:"ИИ-дизайнер каруселей",d:"Пишет карусель по слайдам и подсказывает, какую картинку или схему поставить на каждый.",
+  w:"Делаешь карусели: обложка с крючком и обещанием, слайд «зачем листать», по одной мысли на слайд, вывод и призыв «сохрани» или «отправь подруге». Для каждого слайда: заголовок до 6 слов, текст до 25 слов и подсказка, какую картинку или схему поставить. Отдельно пиши текст для обложки рилс."},
+ {k:"stories",ic:"📱",t:"Сторис",s:"что показать сегодня",e:"ИИ-сторисмейкер",d:"Придумывает сторис на день: жизнь, зерно о продукте, опрос и мягкий переход к продаже.",
+  w:"Придумываешь сторис на день: 4–6 сторис подряд, жизнь плюс зерно о продукте, один опрос или вопрос для вовлечения, мягкий переход к продукту. Для каждой сторис: что снять, текст на экране, какой стикер поставить."},
+ {k:"direct",ic:"💬",t:"Ответы в директ",s:"переписки с клиентами",e:"ИИ-администратор директа",d:"Пишет ответы клиентам по правилам продаж и цепочку автоответов на кодовое слово для бота.",
+  w:"Помогаешь отвечать в директе и мессенджерах. Я присылаю сообщение клиента, ты пишешь ответ по правилам: сначала уточнить потребность, потом показать ценность, назвать цену и предложить время; на «дорого», «подумаю», «не сейчас» отвечать спокойно, без давления. Ещё пишешь цепочку автоответов на кодовое слово для бота: 3 сообщения, последнее с мягким предложением."},
+ {k:"analytics",ic:"📊",t:"Аналитика цифр",s:"что сработало и почему",e:"ИИ-аналитик",d:"Читает твою статистику по скринам, находит, что сработало, и говорит, что повторить.",
+  w:"Разбираешь мою статистику. Я присылаю скрины или цифры публикаций, ты считаешь показатели на 1 000 просмотров (отправки, сохранения, подписки), находишь, что сработало и почему, и даёшь 3 вывода и план: что повторить, что убрать, что протестировать. Не придумывай цифры, опирайся только на мои."},
+ {k:"compet",ic:"🔍",t:"Конкуренты и тренды",s:"что залетает в нише",e:"ИИ-разведчик трендов",d:"Разбирает залетевшие ролики в нише и предлагает, как сделать по-своему, не копируя.",
+  w:"Разбираешь конкурентов и тренды. Я присылаю ссылки, скрины или описания залетевших роликов и постов в моей нише, ты находишь общие приёмы (заголовки, форматы, темы, хуки) и предлагаешь 5 идей, как сделать это по-своему, не копируя."},
+ {k:"base",ic:"📇",t:"База клиентов",s:"кому и что предложить",e:"ИИ-менеджер по клиентам",d:"Разбирает переписки, напоминает, кому что предложить, и пишет личные сообщения.",
+  w:"Работаешь с базой клиентов. Я присылаю переписки или список клиентов, ты собираешь таблицу: кто что покупал или спрашивал, на чём остановились, кому что предложить сейчас, и пишешь личное сообщение каждому, чтобы не было похоже на рассылку."}
+];
+var H={}; T.forEach(function(t){ H[t.k]=0; });
+function drawTasks(){
+  var h=""; T.forEach(function(t){ h+='<div class="task'+(H[t.k]?" on":"")+'" id="t_'+t.k+'"><span class="ic">'+t.ic+'</span><span class="tx">'+t.t+'<small>'+t.s+'</small></span>'+
+    '<span class="stp"><button type="button" data-k="'+t.k+'" data-d="-1" aria-label="меньше">−</button><b>'+H[t.k]+'<small>ч/нед</small></b><button type="button" data-k="'+t.k+'" data-d="1" aria-label="больше">+</button></span></div>'; });
+  $("tasks").innerHTML=h;
+  document.querySelectorAll(".stp button").forEach(function(b){ b.addEventListener("click", function(){
+    var k=b.getAttribute("data-k"); H[k]=Math.max(0,Math.min(30,H[k]+ +b.getAttribute("data-d")));
+    var row=$("t_"+k); row.classList.toggle("on",H[k]>0); row.querySelector(".stp b").innerHTML=H[k]+"<small>ч/нед</small>";
+    $("go").disabled=!T.some(function(t){return H[t.k]>0;}); }); });
+}
+drawTasks();
+function prompt(t){
+  return "Ты мой "+t.e+" в ИИ-команде по Методу Родочинской.\n\nСНАЧАЛА\nЕсли ты ещё не знаешь обо мне, задай до 3 коротких вопросов одним сообщением: кто я и что продаю, кто мой клиент и его главная боль, на каких площадках веду блог. Если я пришлю паспорт продукта или свои тексты, опирайся на них.\n\n"+
+  "ТВОЯ РАБОТА\n"+t.w+"\n\nПРАВИЛА\nПиши просто и живо, на «ты», без канцелярита, клише и пафоса. Не придумывай факты, цифры и истории обо мне: где нужно моё, ставь [скобки]. Где есть выбор, предлагай 2–3 варианта. Отвечай коротко: я пишу с телефона.\n\nНачни с короткого приветствия в своей роли и вопроса: «Что делаем сегодня?»";
+}
+function r1(x){ return Math.round(x); }
+var sel=[];
+$("go").addEventListener("click", function(){
+  sel=T.filter(function(t){return H[t.k]>0;}).sort(function(a,b){return H[b.k]-H[a.k];});
+  var wk=sel.reduce(function(s,t){return s+H[t.k];},0), mo=wk*4.3, fr=mo/2;
+  $("hMonth").textContent=r1(mo); $("hFree").textContent=r1(fr);
+  var dd=Math.round(fr/8); $("days").textContent= dd>=1 ? "Это примерно "+dd+" "+(dd%10===1&&dd%100!==11?"рабочий день":(dd%10>=2&&dd%10<=4&&(dd%100<10||dd%100>=20)?"рабочих дня":"рабочих дней"))+" по 8 часов каждый месяц" : "Каждый час, отданный нейросети, твой";
+  var mx=H[sel[0].k], bh="";
+  sel.forEach(function(t){ bh+='<div class="bar2"><span>'+t.ic+' '+t.t+'</span><i style="width:'+Math.max(6,H[t.k]/mx*100)*0.62+'%"></i><b>'+H[t.k]+' ч</b></div>'; });
+  $("bars").innerHTML=bh;
+  var th="";
+  sel.forEach(function(t,i){
+    th+='<div class="emp'+(i<3?" top3":"")+'">'+(i<3?'<span class="badge">'+(i===0?'🔥 начни с этого':'в первую тройку')+'</span>':'')+
+      '<div class="eh"><span class="av">'+t.ic+'</span><div><h3>'+t.e+'</h3><div class="role">берёт на себя: '+t.t.toLowerCase()+'</div></div></div>'+
+      '<p>'+t.d+'</p><div class="save">⏱ вернёт до '+r1(H[t.k]*4.3/2)+' ч в месяц, если отдать ему половину</div>'+
+      '<button class="btn wide" type="button" data-k="'+t.k+'" style="margin-top:10px;padding:12px">🤝 Нанять: скопировать инструкцию</button></div>';
+  });
+  $("team").innerHTML=th;
+  document.querySelectorAll("#team .btn").forEach(function(b){ b.addEventListener("click", function(){
+    var t=T.filter(function(x){return x.k===b.getAttribute("data-k");})[0];
+    copyText(prompt(t), function(ok){ if(ok){ b.textContent="✅ Нанят! Вставь в новый чат"; toast(t.e+" нанят 🤝"); } }); }); });
+  var w='<li><b>День 1.</b> Создай проект «Моя ИИ-команда» в ChatGPT или просто открой новый чат. Сохрани туда паспорт продукта и 5 своих лучших текстов: сотрудникам будет на что опереться.</li>';
+  var slots=["Дни 1–2","Дни 3–4","Дни 5–6"];
+  sel.slice(0,3).forEach(function(t,i){ w+='<li><b>'+slots[i]+'.</b> Найми '+t.e.replace("ИИ-","ИИ-")+': вставь инструкцию и дай первую реальную задачу из своей недели.</li>'; });
+  w+='<li><b>День 7.</b> Посчитай, сколько часов вернулось. Что вышло хуже, чем руками, допиши в инструкцию сотрудника: команда учится вместе с тобой.</li>';
+  $("week").innerHTML=w;
+  $("result").classList.add("on");
+  window.scrollTo({top:$("result").getBoundingClientRect().top+window.pageYOffset-16,behavior:"smooth"});
+  confetti();
+});
+$("restart").addEventListener("click", function(){ $("result").classList.remove("on"); window.scrollTo({top:0,behavior:"smooth"}); });
+(function(){
+  var box=$("ctaBox"), h="";
+  if (WAITLIST_URL) h+='<a class="btn wide" href="'+WAITLIST_URL+'" target="_blank" rel="noopener">Встать в лист ожидания</a>';
+  if (CARE_CONTACT) h+='<p class="hint" style="margin-top:12px;text-align:center">Вопросы? Пиши в отдел заботы: <b>'+CARE_CONTACT+'</b></p>';
+  if (!h) $("cta").style.display="none"; else box.innerHTML=h;
+})();
+</script>
+
+</body>
+</html>
